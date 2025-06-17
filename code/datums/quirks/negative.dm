@@ -856,6 +856,19 @@
 		quirk_holder.hallucination += rand(10, 20)
 	handle_malk_floors()
 
+/datum/quirk/potent_blood
+	name = "Potent Blood"
+	desc = "There's some spark of vital life in your veins. Vampires gain extra blood points for feeding off of you."
+	mob_trait = TRAIT_POTENT_BLOOD
+	value = -2
+	gain_text = "<span class='warning'>Vim runs through you.</span>"
+	lose_text = "<span class='notice'>You feel subtly enervated.</span>"
+	allowed_species = list("Ghoul","Human")
+
+/datum/quirk/potent_blood/on_spawn()
+	var/mob/living/carbon/H = quirk_holder
+	H.bloodquality = BLOOD_QUALITY_POTENT
+
 #undef LOCATION_LPOCKET
 #undef LOCATION_RPOCKET
 #undef LOCATION_BACKPACK

@@ -16,34 +16,9 @@ Dwarf
 Homosexual
 Dancer
 */
-/datum/quirk/broker
-	name = "Broker"
-	desc = "You are working on stock market in Millenium Tower."
-	value = 0
-	gain_text = "<span class='notice'>You feel more financial stable.</span>"
-	lose_text = "<span class='warning'>You don't feel rich anymore.</span>"
 
-/datum/quirk/broker/on_spawn()
-	if(!iswerewolf(quirk_holder))
-		var/mob/living/carbon/human/H = quirk_holder
-		var/obj/item/stocks_license/pills = new()
-		pills.whose = H.real_name
-		pills.name = "[H.real_name]'s stocks trading license"
-		var/list/slots = list(
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS
-		)
-		H.equip_in_one_of_slots(pills, slots, FALSE)
 
-/datum/quirk/experienced_driver
-	name = "Experienced Driver"
-	desc = "Driving, repairing and sustaining a car is much easier to you."
-	mob_trait = TRAIT_EXP_DRIVER
-	value = 2
-	gain_text = "<span class='notice'>You feel more experienced about cars.</span>"
-	lose_text = "<span class='warning'>You feel more clueless about cars.</span>"
+
 
 /datum/quirk/annonymus
 	name = "Anonymous"
@@ -293,18 +268,6 @@ Dancer
 		else
 			passport.owner = random_unique_name(debtor.gender)
 
-/datum/quirk/potent_blood
-	name = "Potent Blood"
-	desc = "There's some spark of vital life in your veins. Vampires gain extra blood points for feeding off of you."
-	mob_trait = TRAIT_POTENT_BLOOD
-	value = -2
-	gain_text = "<span class='warning'>Vim runs through you.</span>"
-	lose_text = "<span class='notice'>You feel subtly enervated.</span>"
-	allowed_species = list("Ghoul","Human")
-
-/datum/quirk/potent_blood/on_spawn()
-	var/mob/living/carbon/H = quirk_holder
-	H.bloodquality = BLOOD_QUALITY_POTENT
 
 /datum/quirk/organovore
 	name = "Organovore"
