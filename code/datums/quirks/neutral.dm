@@ -23,11 +23,11 @@
 
 /datum/quirk/foreigner
 	name = "Foreigner"
-	desc = "You're not from around here. You don't know English!"
+	desc = "You're not from around here. You don't know Galactic Common!"
 	value = 0
 	gain_text = "<span class='notice'>The words being spoken around you don't make any sense."
-	lose_text = "<span class='notice'>You've developed fluency in English."
-	medical_record_text = "Patient does not speak English and may require an interpreter."
+	lose_text = "<span class='notice'>You've developed fluency in Galactic Common."
+	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
 	mood_quirk = TRUE
 
 /datum/quirk/foreigner/add()
@@ -279,16 +279,19 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/organ/tongue/old_tongue = locate() in H.internal_organs
 	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(H))
+	var/obj/item/clothing/gloves/radio/gloves = new(get_turf(H))
 	old_tongue.Remove(H)
 	new_tongue.Insert(H)
 	qdel(old_tongue)
+	if(!H.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES, bypass_equip_delay_self = TRUE))
+		H.put_in_hands(gloves)
 
 /datum/quirk/tongue_tied/post_add()
 	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
 
 /datum/quirk/photographer
 	name = "Photographer"
-	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary."
+	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary among your coworkers."
 	value = 0
 	mob_trait = TRAIT_PHOTOGRAPHER
 	gain_text = "<span class='notice'>You know everything about photography.</span>"
@@ -317,25 +320,3 @@
 	)
 	H.equip_in_one_of_slots(camera, camera_slots , qdel_on_fail = TRUE)
 	H.regenerate_icons()
-
-/datum/quirk/broker
-	name = "Broker"
-	desc = "You are a Stock Trader in the Millenium Tower, and carry your license to show it."
-	value = 0
-	gain_text = "<span class='notice'>You feel more financial stable.</span>"
-	lose_text = "<span class='warning'>You don't feel rich anymore.</span>"
-
-//this fucking sucks btw
-/datum/quirk/broker/on_spawn()
-	if(!iswerewolf(quirk_holder))
-		var/mob/living/carbon/human/H = quirk_holder
-		var/obj/item/stocks_license/pills = new()
-		pills.whose = H.real_name
-		pills.name = "[H.real_name]'s Stock Trading License"
-		var/list/slots = list(
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS
-		)
-		H.equip_in_one_of_slots(pills, slots, FALSE)
